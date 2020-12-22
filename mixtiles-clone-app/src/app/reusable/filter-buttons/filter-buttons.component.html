@@ -1,0 +1,17 @@
+<div class="filter-strip">
+  <button
+    *ngFor="let item of data; let i = index"
+    class="ion-activatable ripple-parent filter-button"
+    [ngClass]="item.selected ? 'selected' : undefined"
+    (click)="onChange(i)"
+  >
+    <div>
+      <img class="RetinaImage filter-image" [src]="item.iconImage" alt="" />
+      <div class="filter-bottom">
+        <div class="filter-name">{{ item.title }}</div>
+      </div>
+    </div>
+
+    <ion-ripple-effect> </ion-ripple-effect>
+  </button>
+</div>

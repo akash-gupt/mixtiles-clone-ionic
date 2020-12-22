@@ -1,0 +1,44 @@
+.UploadButton {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  border: 4px dashed #b0b0b0;
+  width: 230px;
+  height: 230px;
+  border-radius: 14px;
+  transition: box-shadow 0.3s, background-color 0.3s, transform 0.3s,
+    border-color 0.3s;
+  animation: fade-in 0.8s;
+
+  .round {
+    height: 170px;
+    width: 170px;
+    background: #fff;
+    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.07);
+    border-radius: 1285.23px;
+    border: unset;
+  }
+
+  .animated {
+    animation: fade-in 0.8s, shrink-grow 2s ease-out infinite,
+      pink-highlight 2s ease-out infinite;
+    background-color: hsla(0, 0%, 100%, 0.7);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}

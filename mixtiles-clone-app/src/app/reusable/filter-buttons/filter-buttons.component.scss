@@ -1,0 +1,56 @@
+.filter-strip {
+  padding-top: 5px;
+  height: 110px;
+  margin: -5px 0 5px;
+  display: flex;
+  overflow-y: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.filter-button .filter-image {
+  width: 65px;
+  height: 65px;
+}
+
+.filter-button {
+  scroll-margin: 10px;
+  width: 80px;
+  border-radius: 6px;
+  width: 85px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  animation: fade-scale-in 0.4s;
+}
+
+.filter-bottom .filter-name {
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  line-height: 14px;
+  margin-top: 5px;
+  text-transform: capitalize;
+}
+
+.filter-button.selected {
+  background-color: #f4f4f4;
+  background-image: unset;
+}
+
+.filter-button.selected {
+  color: #f07;
+}
+
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+
