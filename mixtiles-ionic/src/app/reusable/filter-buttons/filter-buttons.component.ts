@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FilterButtonType } from './types';
+import { FilterButtonType } from 'src/app/app.constant';
 
 @Component({
   selector: 'app-filter-buttons',

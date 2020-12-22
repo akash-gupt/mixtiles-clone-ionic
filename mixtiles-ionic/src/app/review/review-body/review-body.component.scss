@@ -6,9 +6,6 @@
   overflow: hidden;
 
   .no-tiles-placeholder {
-    opacity: 1;
-    visibility: visible;
-    position: absolute;
     transition: opacity 0.5s 0.5s, visibility 0.5s 0.5s;
     justify-content: center;
     display: flex;

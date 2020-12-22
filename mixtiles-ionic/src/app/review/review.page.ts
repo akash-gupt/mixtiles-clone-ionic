@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
+import { FrameType } from '../app.constant';
 
 @Component({
   selector: 'app-review',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./review.page.scss'],
 })
 export class ReviewPage implements OnInit {
+  frameType: FrameType = 'bold';
+  selectedImage: string;
 
-  constructor() { }
+  constructor(private menu: MenuController) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  onCheckout() {}
+
+  toggle() {
+    this.menu.toggle();
   }
-
 }

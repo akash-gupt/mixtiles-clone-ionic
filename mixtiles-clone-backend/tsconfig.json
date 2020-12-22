@@ -9,7 +9,13 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true
+    "baseUrl": ".",
+    "incremental": true,
+    "paths": {
+      "@api/utils": ["src/shared/util/index"],
+      "@api/constants": ["src/shared/constants/index"],
+      "@api/customDecorators": ["src/shared/decorators/index"],
+      "@api/modules/token": ["src/shared/modules/token/index"]
+    },
   }
 }

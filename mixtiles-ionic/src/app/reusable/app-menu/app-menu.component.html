@@ -1,0 +1,26 @@
+<ion-menu side="end" contentId="main-content" [menuId]="'main'">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-button type="clear" fill (click)="toggle(); login()">
+          <ion-label class="menu-item-label">Login</ion-label>
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-button type="clear" fill (click)="toggle(); register()">
+          <ion-label class="menu-item-label">Register</ion-label>
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-button type="clear" fill (click)="toggle(); logout()">
+          <ion-label class="menu-item-label">Logout</ion-label>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>

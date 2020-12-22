@@ -29,6 +29,6 @@
   </div>
   <p *ngIf="isLoading">Loading ...</p>
   <ng-template #selectedTemp>
-    <img [src]="croppedImagePath" />
+    <app-frame [fileUrl]="croppedImagePath" [frameType]="frameType"></app-frame>
   </ng-template>
 </button>

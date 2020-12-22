@@ -1,4 +1,4 @@
-<ion-footer [translucent]="true">
+<ion-footer [translucent]="true" class="bottom-footer">
   <div class="bottom-bar">
     <div class="bottom-button-container">
       <ion-button
@@ -7,7 +7,7 @@
         class="bottom-button"
         (click)="onPress.emit()"
       >
-        Style Your Photos
+        {{ title }}
       </ion-button>
     </div>
   </div>

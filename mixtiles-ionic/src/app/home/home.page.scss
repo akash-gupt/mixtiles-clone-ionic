@@ -7,10 +7,11 @@
   flex-direction: column;
   align-items: center;
   background-image: linear-gradient(#fff,#fafafa);
+  height: 100%;
 }
 
 .Pitch-box-1 .logo {
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 .Pitch-header {
@@ -18,6 +19,12 @@
   font-size: 30px;
   text-align: center;
   padding: 24px 20px 20px;
+
+  &.centered {
+    display: flex;
+    flex: 1;
+    align-items: center;
+  }
 }
 
 .PitchVideo.visible {
@@ -29,3 +36,4 @@
   justify-content: center;
   opacity: 0;
 }
+

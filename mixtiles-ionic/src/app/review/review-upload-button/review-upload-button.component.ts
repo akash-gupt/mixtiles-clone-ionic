@@ -1,25 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import { Crop, CropOptions } from '@ionic-native/crop/ngx';
-import {
-  ImagePicker,
-  ImagePickerOptions,
-} from '@ionic-native/image-picker/ngx';
 import { File as FileReader } from '@ionic-native/file/ngx';
+import { FrameType } from 'src/app/app.constant';
+
 @Component({
   selector: 'app-review-upload-button',
   templateUrl: './review-upload-button.component.html',
   styleUrls: ['./review-upload-button.component.scss'],
 })
 export class ReviewUploadButtonComponent implements OnInit {
-  croppedImagePath = '';
-  isLoading = false;
+  @Input() frameType: FrameType = 'bold';
+  @Output() onChange = new EventEmitter<string>();
 
-  imagePickerOptions: ImagePickerOptions = {
-    maximumImagesCount: 1,
-    // quality: 50,
-  };
+  croppedImagePath = null;
+  isLoading = false;
 
   cropOptions: CropOptions = {
     quality: 50,
@@ -27,7 +23,6 @@ export class ReviewUploadButtonComponent implements OnInit {
 
   constructor(
     public actionSheetController: ActionSheetController,
-    private imagePicker: ImagePicker,
     private file: FileReader,
     private crop: Crop,
     private camera: Camera
@@ -107,6 +102,9 @@ export class ReviewUploadButtonComponent implements OnInit {
       (base64) => {
         this.croppedImagePath = base64;
         this.isLoading = false;
+
+        // Emit to parent
+        this.onChange.emit(this.croppedImagePath);
       },
       (error) => {
         alert('Error in showing image' + error);
@@ -114,58 +112,4 @@ export class ReviewUploadButtonComponent implements OnInit {
       }
     );
   }
-
-  // pickImage() {
-  //   this.imagePicker.getPictures(this.imagePickerOptions).then(
-  //     (results) => {
-  //       for (var i = 0; i < results.length; i++) {
-  //         this.cropImage(results[i]);
-  //       }
-  //     },
-  //     (err) => {
-  //       alert(err);
-  //     }
-  //   );
-  // }
-
-  // cropImage(imgPath) {
-  //   console.log('cropping ', imgPath);
-  //   this.crop.crop(imgPath, this.cropOptions).then(
-  //     async (newPath) => {
-  //       console.log('newPath', newPath);
-  //       this.showCroppedImage(newPath.split('?')[0]);
-  //     },
-  //     (error) => {
-  //       console.error('Error cropping image' + error);
-  //     }
-  //   );
-  // }
-
-  // async showCroppedImage(ImagePath) {
-  //   this.croppedImagePath = ImagePath;
-  //   this.isLoading = true;
-  //   var copyPath = ImagePath;
-  //   var splitPath = copyPath.split('/');
-  //   var imageName = splitPath[splitPath.length - 1];
-  //   var filePath = ImagePath.split(imageName)[0];
-
-  //   console.log('filePath', filePath);
-  //   console.log('imageName', imageName);
-
-  //   try {
-  //     this.file
-  //       .readAsDataURL(filePath, imageName)
-  //       .then((base64) => {
-  //         this.croppedImagePath = base64;
-  //         this.isLoading = false;
-  //         console.log('croppedImagePath', this.croppedImagePath);
-  //       })
-  //       .catch((err) => {
-  //         console.error('Error showing image' + err);
-  //         this.isLoading = false;
-  //       });
-  //   } catch (error) {
-  //     console.error('Error showing image', error);
-  //   }
-  // }
 }

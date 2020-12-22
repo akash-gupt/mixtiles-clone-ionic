@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { GuardService } from './services';
 
 const routes: Routes = [
   {
@@ -11,11 +12,22 @@ const routes: Routes = [
     path: 'review',
     loadChildren: () =>
       import('./review/review.module').then((m) => m.ReviewPageModule),
+    canActivate: [GuardService],
   },
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginPageModule),
+  },
+  {
+    path: 'register',
+    loadChildren: () =>
+      import('./register/register.module').then((m) => m.RegisterPageModule),
   },
 ];
 

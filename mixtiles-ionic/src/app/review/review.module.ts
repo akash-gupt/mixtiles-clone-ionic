@@ -9,6 +9,9 @@ import { ReviewHeadComponent } from './review-head/review-head.component';
 import { ReviewBodyComponent } from './review-body/review-body.component';
 import { FilterButtonsModule } from '../reusable/filter-buttons';
 import { ReviewUploadButtonComponent } from './review-upload-button';
+import { FrameComponent } from './frame/frame.component';
+import { AppFooterModule } from '../reusable/app-footer';
+import { AppMenuModule } from '../reusable/app-menu/app-menu.module';
 
 @NgModule({
   imports: [
@@ -16,11 +19,14 @@ import { ReviewUploadButtonComponent } from './review-upload-button';
     IonicModule,
     ReviewPageRoutingModule,
     FilterButtonsModule,
+    AppFooterModule,
+    AppMenuModule,
   ],
   declarations: [
     ReviewPage,
     ReviewHeadComponent,
     ReviewBodyComponent,
+    FrameComponent,
     ReviewUploadButtonComponent,
   ],
 })

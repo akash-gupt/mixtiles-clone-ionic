@@ -7,12 +7,21 @@
     <ion-img class="dark" [src]="'assets/dark-logo.svg'"></ion-img>
 
     <ion-buttons slot="end">
-      <ion-menu-button autoHide="false"></ion-menu-button>
+      <div id="main-content">
+        <ion-button (click)="toggle()">
+          <ion-icon [icon]="'menu-outline'"></ion-icon>
+        </ion-button>
+      </div>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <app-review-head></app-review-head>
-  <app-review-body></app-review-body>
+  <app-review-head (onSelectionChange)="frameType =$event"></app-review-head>
+  <app-review-body
+    [frameType]="frameType"
+    (onChange)="selectedImage = $event"
+  ></app-review-body>
+  <app-footer [title]="'Checkout'" (onPress)="onCheckout()"></app-footer>
 </ion-content>
+<app-menu></app-menu>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
@@ -6,6 +6,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./app-footer.component.scss'],
 })
 export class AppFooterComponent implements OnInit {
+  @Input() title = 'Style Your Photos';
   @Output() onPress: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
