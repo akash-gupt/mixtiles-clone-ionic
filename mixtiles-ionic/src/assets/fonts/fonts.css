@@ -1,0 +1,44 @@
+@font-face {
+  font-family: ProximaNova;
+  src: url(./proximanova-regular-webfont.eot);
+  src: url(./proximanova-regular-webfontd41d.eot?#iefix) format("embedded-opentype"), url(./proximanova-regular-webfont.woff) format("woff"), url(./proximanova-regular-webfont.ttf) format("truetype"), url(./proximanova-regular-webfont.svg#wf) format("svg");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: ProximaNova;
+  src: url(./proximanova-semibold-webfont.eot);
+  src: url(./proximanova-semibold-webfontd41d.eot?#iefix) format("embedded-opentype"), url(./proximanova-semibold-webfont.woff) format("woff"), url(./proximanova-semibold-webfont.ttf) format("truetype"), url(./proximanova-semibold-webfont.svg#wf) format("svg");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: ProximaNova;
+  src: url(./proximanova-bold-webfont.eot);
+  src: url(./proximanova-bold-webfontd41d.eot?#iefix) format("embedded-opentype"), url(./proximanova-bold-webfont.woff) format("woff"), url(./proximanova-bold-webfont.ttf) format("truetype"), url(./proximanova-bold-webfont.svg#wf) format("svg");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: ProximaNova;
+  src: url(./proximanova-extrabold-webfont.eot);
+  src: url(./proximanova-extrabold-webfontd41d.eot?#iefix) format("embedded-opentype"), url(./proximanova-extrabold-webfont.woff) format("woff"), url(./proximanova-extrabold-webfont.ttf) format("truetype"), url(./proximanova-extrabold-webfont.svg#wf) format("svg");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: Gilroy;
+  src: url(./Gilroy-ExtraBold.eot);
+  src: url(./Gilroy-ExtraBoldd41d.eot?#iefix) format("embedded-opentype"), url(./Gilroy-ExtraBold.woff) format("woff"), url(./Gilroy-ExtraBold.ttf) format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap
+}

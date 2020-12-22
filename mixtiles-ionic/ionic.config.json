@@ -1,0 +1,7 @@
+{
+  "name": "mixtiles-ionic",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

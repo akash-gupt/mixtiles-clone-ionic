@@ -1,0 +1,21 @@
+.bottom-bar {
+  .bottom-button-container {
+    padding: 15px;
+  }
+  .bottom-button  {
+    position: relative;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: box-shadow .3s,background-color .3s;
+    max-width: 400px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}

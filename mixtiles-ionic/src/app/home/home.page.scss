@@ -1,0 +1,31 @@
+.header-toolbar {
+  text-align: center;
+}
+
+.Pitch-box-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: linear-gradient(#fff,#fafafa);
+}
+
+.Pitch-box-1 .logo {
+    margin-top: 20px;
+}
+
+.Pitch-header {
+  font-weight: 700;
+  font-size: 30px;
+  text-align: center;
+  padding: 24px 20px 20px;
+}
+
+.PitchVideo.visible {
+  opacity: 1;
+}
+
+.PitchVideo {
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+}
