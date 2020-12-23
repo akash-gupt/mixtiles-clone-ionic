@@ -9,10 +9,10 @@ import { GetUserId } from '../user/get-user.decorator';
 @UseGuards(AuthGuard('jwt'))
 @ApiBearerAuth()
 export class FileController {
-  constructor(public readonly FileService: FileService) {}
+  constructor(public readonly fileService: FileService) {}
 
   @Post('create')
   create(@GetUserId() userId: string, @Body() createDto: CreateFileDto) {
-    return this.FileService.createFile(userId, createDto);
+    return this.fileService.createFile(userId, createDto);
   }
 }

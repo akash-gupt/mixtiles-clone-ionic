@@ -1,11 +1,6 @@
-import {
-  Injectable,
-  UnauthorizedException,
-  Inject,
-  // Request,
-  // Req,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/modules/user/user.entity';
 import { UserService } from 'src/modules/user/user.service';
 
 import { JwtPayload } from './jwt-payload.interface';
@@ -21,12 +16,8 @@ export class AuthService {
   async createAccessToken(user: User, rememberMe?: boolean): Promise<string> {
     const payload: JwtPayload = {
       id: user.id,
-      name: user.firstName,
       email: user.email,
-      roles: user.roles,
     };
-
-    if (user.mustResetPassword) payload.mustResetPassword = true;
 
     return this.jwtService.sign(payload, {
       expiresIn: rememberMe ? '365d' : '7d',

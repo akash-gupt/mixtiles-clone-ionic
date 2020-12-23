@@ -1,21 +1,15 @@
-import {
-  Injectable,
-  ConflictException,
-  Logger,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import * as bcrypt from 'bcrypt';
 
 import { UQ_USER_EMAIL, User } from './user.entity';
-import { CreateUserDto, UpdateUserDto } from './dto/create-user.dto';
-import { UserTokenService } from './user-token.service';
+import { CreateUserDto } from './dto/create-user.dto';
 import { Repository } from 'typeorm';
-import { generateOtp } from '@api/utils';
 import { ErrorMessage } from '@api/constants';
 import { DatabaseErrors } from 'src/shared/errors';
+import { LoginDto } from 'src/auth/models';
+import * as _ from 'lodash';
 
 @Injectable()
 export class UserService {
@@ -24,15 +18,12 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    private usersEmailService: UsersEmailService,
-    private userTokenService: UserTokenService,
   ) {}
 
   async createAccount(createUserDto: CreateUserDto): Promise<void> {
     const { email, password } = createUserDto;
 
     const user = this.userRepository.create();
-    const confirmationCode = generateOtp();
 
     user.email = email;
     user.password = await this.hashPassword(password);
@@ -40,8 +31,6 @@ export class UserService {
     try {
       const createdUser = await user.save();
       this.logger.debug(`User created ${JSON.stringify(createdUser)}`);
-
-      await this.usersEmailService.sendConfirmationCode(createdUser);
     } catch (err) {
       this.handleUniqueError(err);
     }
@@ -63,21 +52,10 @@ export class UserService {
     return bcrypt.hash(password, 10);
   }
 
-  async findByEmail(email: string): Promise<User | never> {
-    const foundRecord = await this.userRepository.findOne({ email });
-    if (!foundRecord) {
-      throw new HttpException(
-        ErrorMessage.userNotFound,
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-    return foundRecord;
-  }
-
   private handleUniqueError(error) {
     const isUQError = DatabaseErrors.isUniqueConstraintViolation(error);
     if (isUQError) {
-      const constraint = get(error, 'constraint');
+      const constraint = _.get(error, 'constraint');
       switch (constraint) {
         case UQ_USER_EMAIL:
           throw new HttpException(

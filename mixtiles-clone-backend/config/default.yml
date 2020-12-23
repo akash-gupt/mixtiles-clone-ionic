@@ -1,8 +1,11 @@
 db:
-  type: 'postgres'
-  port: 32777
-  database: ''
+  type: 'mysql'
+  port: 3306
+  host: 'remotemysql.com'
+  database: 'rVduo83um9'
   logging: false
+  username: 'rVduo83um9'
+  password: '3zsbuYQrFE'
 
 jwt:
   expiresIn: 3600

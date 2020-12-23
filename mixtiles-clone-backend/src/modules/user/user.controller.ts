@@ -28,14 +28,4 @@ export class UserController {
   getMe(@GetUser() user: User): User {
     return user;
   }
-
-  @Put()
-  @ApiOperation({ description: 'Update Profile' })
-  async update(
-    @GetUserId() userId: number,
-    @Param('id') id: number,
-    @Body() body: UpdateUserDto,
-  ) {
-    return this.userService.updateProfile(userId, body);
-  }
 }
