@@ -28,12 +28,5 @@ async function bootstrap() {
   logger.log(
     'Listening at http://localhost:' + serverConfig.port + '/' + GLOBAL_PREFIX,
   );
-  logger.log(
-    'Swagger at http://localhost:' +
-      serverConfig.port +
-      '/' +
-      GLOBAL_PREFIX +
-      '/docs',
-  );
 }
 bootstrap();

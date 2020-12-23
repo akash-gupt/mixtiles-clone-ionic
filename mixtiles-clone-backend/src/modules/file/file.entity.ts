@@ -3,30 +3,34 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  Index,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
-import * as bcrypt from 'bcrypt';
-import { Exclude } from 'class-transformer';
+import { UserEntity } from '../user/user.entity';
 
 export const UQ_USER_EMAIL = 'UQ_user_email';
 
 @Entity()
-export class File extends BaseEntity {
+export class FileEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Index(UQ_USER_EMAIL, ['email'], { unique: true })
-  @Column()
-  email: string;
+  @Column({ nullable: false, type: 'text' })
+  file: string;
 
-  @Column({ nullable: false, type: 'varchar', length: 512 })
-  @Exclude()
-  password: string;
+  @Column({ nullable: false })
+  type: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created: Date;
 
-  async validatePassword(password: string): Promise<boolean> {
-    return bcrypt.compare(password, this.password);
-  }
+  @ManyToOne(
+    () => UserEntity,
+    user => user.files,
+  )
+  @JoinColumn({ name: 'userId' })
+  user: UserEntity;
+
+  @Column()
+  userId: string;
 }

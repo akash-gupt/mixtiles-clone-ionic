@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import * as bcrypt from 'bcrypt';
 
-import { UQ_USER_EMAIL, User } from './user.entity';
+import { UQ_USER_EMAIL, UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Repository } from 'typeorm';
 import { ErrorMessage } from '@api/constants';
@@ -16,8 +16,8 @@ export class UserService {
   private logger = new Logger('UsersService');
 
   constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
   ) {}
 
   async createAccount(createUserDto: CreateUserDto): Promise<void> {
@@ -36,7 +36,9 @@ export class UserService {
     }
   }
 
-  async validateUserPassword(authCredentialsDto: LoginDto): Promise<User> {
+  async validateUserPassword(
+    authCredentialsDto: LoginDto,
+  ): Promise<UserEntity> {
     const { email, password } = authCredentialsDto;
     const user = await this.userRepository.findOne({ email });
 

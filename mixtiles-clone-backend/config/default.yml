@@ -7,5 +7,9 @@ db:
   username: 'rVduo83um9'
   password: '3zsbuYQrFE'
 
+server: 
+  port:  3000
+
 jwt:
+  secret: 'JWT_SECRET'
   expiresIn: 3600

@@ -4,14 +4,16 @@ import {
   PrimaryGeneratedColumn,
   Column,
   Index,
+  OneToMany,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
+import { FileEntity } from '../file/file.entity';
 
 export const UQ_USER_EMAIL = 'UQ_user_email';
 
 @Entity()
-export class User extends BaseEntity {
+export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -25,6 +27,12 @@ export class User extends BaseEntity {
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created: Date;
+
+  @OneToMany(
+    () => FileEntity,
+    file => file.user,
+  )
+  files: FileEntity[];
 
   async validatePassword(password: string): Promise<boolean> {
     return bcrypt.compare(password, this.password);
