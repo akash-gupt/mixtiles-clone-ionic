@@ -20,8 +20,9 @@
   <app-review-head (onSelectionChange)="frameType =$event"></app-review-head>
   <app-review-body
     [frameType]="frameType"
+    [croppedImagePath]="selectedImage.base64"
     (onChange)="selectedImage = $event"
   ></app-review-body>
-  <app-footer [title]="'Save'" (onPress)="save()"></app-footer>
+  <app-footer [title]="'Save'" (onPress)="upload()"></app-footer>
 </ion-content>
 <app-menu></app-menu>

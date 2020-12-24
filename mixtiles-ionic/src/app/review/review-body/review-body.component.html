@@ -1,6 +1,7 @@
 <div class="content">
   <div class="no-tiles-placeholder">
     <app-review-upload-button
+      [croppedImagePath]="croppedImagePath"
       [frameType]="frameType"
       (onChange)="onChange.emit($event)"
     ></app-review-upload-button>

@@ -19,8 +19,21 @@ export type RegisterBody = {
 };
 
 export type CreateFileBody = {
-  file: string;
+  fileName: string;
   frameType: string;
+};
+
+export type SelectImageEvRes = {
+  imageName: string;
+  filePath: string;
+  base64: string;
+};
+
+export type FileUploadResponse = {
+  originalname: string;
+  filename: string;
+  path: string;
+  size: number;
 };
 
 export const Endpoints = {

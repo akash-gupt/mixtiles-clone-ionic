@@ -1,0 +1,6 @@
+https://github.com/apache/cordova-plugin-file-transfer/issues/258
+
+/ NSString* userAgent = [self.commandDelegate userAgent];
+    // if (userAgent) {
+    //     [req setValue:userAgent forHTTPHeaderField:@"User-Agent"];
+    // }

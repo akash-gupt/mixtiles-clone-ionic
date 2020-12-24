@@ -13,6 +13,7 @@ import { FrameComponent } from './frame/frame.component';
 import { AppFooterModule } from '../reusable/app-footer';
 import { AppMenuModule } from '../reusable/app-menu/app-menu.module';
 import { ReviewService } from './review.service';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 
 @NgModule({
   imports: [
@@ -30,6 +31,6 @@ import { ReviewService } from './review.service';
     FrameComponent,
     ReviewUploadButtonComponent,
   ],
-  providers: [ReviewService],
+  providers: [ReviewService, FileTransfer],
 })
 export class ReviewPageModule {}

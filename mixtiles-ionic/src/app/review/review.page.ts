@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, MenuController } from '@ionic/angular';
 import {
-  FileTransfer,
-  FileUploadOptions,
-  FileTransferObject,
-} from '@ionic-native/file-transfer/ngx';
-import { Endpoints, FrameType } from '../app.constant';
+  AlertController,
+  LoadingController,
+  MenuController,
+} from '@ionic/angular';
+
+import { Endpoints, FrameType, SelectImageEvRes } from '../app.constant';
 import { ReviewService } from './review.service';
 
 @Component({
@@ -15,16 +15,26 @@ import { ReviewService } from './review.service';
 })
 export class ReviewPage implements OnInit {
   frameType: FrameType = 'bold';
-  selectedImage: string;
+  selectedImage: SelectImageEvRes = {
+    base64: null,
+    filePath: null,
+    imageName: null,
+  };
+  loading: HTMLIonLoadingElement;
 
   constructor(
-    private transfer: FileTransfer,
     private menu: MenuController,
     private alert: AlertController,
-    private reviewService: ReviewService
+    private reviewService: ReviewService,
+    public loadingController: LoadingController
   ) {}
 
-  ngOnInit() {}
+  async ngOnInit() {
+    this.loading = await this.loadingController.create({
+      message: 'Loading...',
+      duration: 2000,
+    });
+  }
 
   onCheckout() {}
 
@@ -32,7 +42,7 @@ export class ReviewPage implements OnInit {
     this.menu.toggle();
   }
 
-  save() {
+  save(savedFileName: string) {
     if (!this.selectedImage) {
       this.failedAlert();
       return;
@@ -40,7 +50,7 @@ export class ReviewPage implements OnInit {
 
     this.reviewService
       .createFile({
-        file: String(this.selectedImage),
+        fileName: savedFileName,
         frameType: this.frameType,
       })
       .then((success) => {
@@ -70,24 +80,27 @@ export class ReviewPage implements OnInit {
 
   reset() {
     this.frameType = 'bold';
-    this.selectedImage = null;
+    this.selectedImage = {
+      base64: null,
+      filePath: null,
+      imageName: null,
+    };
   }
 
-  upload() {
-    const fileTransfer: FileTransferObject = this.transfer.create();
-    let options: FileUploadOptions = {
-      fileKey: 'file',
-      fileName: 'name.jpg',
-      headers: {},
-    };
+  async upload() {
+    await this.loading.present();
 
-    fileTransfer.upload('<file path>', Endpoints.UPLOAD_FILE, options).then(
-      (data) => {
-        // success
-      },
-      (err) => {
-        // error
-      }
+    const response = await this.reviewService.upload(
+      this.selectedImage.filePath,
+      this.selectedImage.imageName
     );
+
+    if (response) {
+      await this.save(response.filename);
+    } else {
+      this.failedAlert();
+    }
+
+    await this.loading.dismiss();
   }
 }

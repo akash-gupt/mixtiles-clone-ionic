@@ -3,7 +3,7 @@ import { ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import { Crop, CropOptions } from '@ionic-native/crop/ngx';
 import { File as FileReader } from '@ionic-native/file/ngx';
-import { FrameType } from 'src/app/app.constant';
+import { FrameType, SelectImageEvRes } from 'src/app/app.constant';
 
 @Component({
   selector: 'app-review-upload-button',
@@ -12,9 +12,9 @@ import { FrameType } from 'src/app/app.constant';
 })
 export class ReviewUploadButtonComponent implements OnInit {
   @Input() frameType: FrameType = 'bold';
-  @Output() onChange = new EventEmitter<string>();
+  @Input() croppedImagePath: string = null;
+  @Output() onChange = new EventEmitter<SelectImageEvRes>();
 
-  croppedImagePath = null;
   isLoading = false;
 
   cropOptions: CropOptions = {
@@ -104,7 +104,11 @@ export class ReviewUploadButtonComponent implements OnInit {
         this.isLoading = false;
 
         // Emit to parent
-        this.onChange.emit(this.croppedImagePath);
+        this.onChange.emit({
+          imageName,
+          base64,
+          filePath: ImagePath,
+        });
       },
       (error) => {
         alert('Error in showing image' + error);
