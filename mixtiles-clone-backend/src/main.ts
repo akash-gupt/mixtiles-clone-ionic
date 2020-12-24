@@ -27,7 +27,7 @@ async function bootstrap() {
       },
     }),
   );
-  await app.listen(serverConfig.port);
+  await app.listen(process.env.PORT || serverConfig.port);
   logger.log(`Application started on port ${serverConfig.port}`);
   logger.log(
     'Listening at http://localhost:' + serverConfig.port + '/' + GLOBAL_PREFIX,

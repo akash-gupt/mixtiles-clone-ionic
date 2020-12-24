@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  endpointUrl: '',
+  endpointUrl: 'https://mixtiles-clone.herokuapp.com/api',
 };

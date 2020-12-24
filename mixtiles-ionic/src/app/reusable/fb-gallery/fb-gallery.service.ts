@@ -61,7 +61,7 @@ export class FbGalleryService {
   }
 
   downloadAndSaveTempFile(url: string): Promise<string | null> {
-    const fileName = url.replace(/[\#\?].*$/, '');
+    const fileName = url.substring(url.lastIndexOf('/') + 1, url.length);
     const filePath = this.file.dataDirectory + fileName;
     return new Promise((resolve) => {
       this.nativeHTTP
