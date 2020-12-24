@@ -14,7 +14,7 @@ export class FileEntity extends BaseEntity {
   id: number;
 
   @Column({ nullable: false, type: 'text' })
-  file: string;
+  fileName: string;
 
   @Column({ nullable: false })
   frameType: string;

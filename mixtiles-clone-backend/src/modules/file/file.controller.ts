@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Param,
   Post,
+  Query,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -12,7 +14,9 @@ import { FileService } from './file.service';
 import { CreateFileDto } from './dto/create-file.dto';
 import { GetUserId } from '../user/get-user.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
-
+import { diskStorage } from 'multer';
+import { editFileName, imageFileFilter } from './utils/file-upload.utils';
+import { UPLOAD_PATH } from 'src/app.constants';
 @Controller('files')
 @UseGuards(AuthGuard('jwt'))
 @ApiBearerAuth()
@@ -26,8 +30,16 @@ export class FileController {
   }
 
   @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: UPLOAD_PATH,
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }),
+  )
   uploadFile(@UploadedFile() file) {
-    console.log(file);
+    return file;
   }
 }

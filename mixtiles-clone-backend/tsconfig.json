@@ -17,5 +17,5 @@
       "@api/customDecorators": ["src/shared/decorators/index"],
       "@api/modules/token": ["src/shared/modules/token/index"]
     },
-  }
+  },
 }

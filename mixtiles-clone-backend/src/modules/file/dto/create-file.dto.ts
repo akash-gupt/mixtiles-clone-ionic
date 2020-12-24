@@ -6,7 +6,7 @@ export class CreateFileDto {
   @IsNotEmpty()
   @IsString()
   @ApiProperty()
-  readonly file: string;
+  readonly fileName: string;
 
   @IsDefined()
   @IsNotEmpty()
