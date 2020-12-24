@@ -27,7 +27,7 @@ export class AuthService {
     });
   }
 
-  async createAccount(createUserDto: CreateAccountDto): Promise<void> {
+  async createAccount(createUserDto: CreateAccountDto) {
     return this.userService.createAccount(createUserDto);
   }
 

@@ -8,8 +8,6 @@ import {
 } from 'typeorm';
 import { UserEntity } from '../user/user.entity';
 
-export const UQ_USER_EMAIL = 'UQ_user_email';
-
 @Entity()
 export class FileEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -19,7 +17,7 @@ export class FileEntity extends BaseEntity {
   file: string;
 
   @Column({ nullable: false })
-  type: string;
+  frameType: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created: Date;

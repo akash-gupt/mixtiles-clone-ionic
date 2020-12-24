@@ -20,7 +20,7 @@ export class UserService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
-  async createAccount(createUserDto: CreateUserDto): Promise<void> {
+  async createAccount(createUserDto: CreateUserDto) {
     const { email, password } = createUserDto;
 
     const user = this.userRepository.create();
@@ -31,6 +31,7 @@ export class UserService {
     try {
       const createdUser = await user.save();
       this.logger.debug(`User created ${JSON.stringify(createdUser)}`);
+      return createdUser;
     } catch (err) {
       this.handleUniqueError(err);
     }
