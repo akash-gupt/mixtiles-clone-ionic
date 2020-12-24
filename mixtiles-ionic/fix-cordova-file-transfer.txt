@@ -4,3 +4,8 @@ https://github.com/apache/cordova-plugin-file-transfer/issues/258
     // if (userAgent) {
     //     [req setValue:userAgent forHTTPHeaderField:@"User-Agent"];
     // }
+
+
+    setup cordova plugin facebook
+
+    change app id in MyApp-Info.plist

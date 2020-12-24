@@ -1,0 +1,8 @@
+<app-gallery
+  (onClose)="closeGallery()"
+  [items]="igImages | igGalley"
+  (loadMore)="paginatePhotos($event)"
+  [nextToken]="after"
+  [loading]="loading"
+  (onSelect)="onSelect($event)"
+></app-gallery>

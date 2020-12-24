@@ -42,3 +42,5 @@ export const Endpoints = {
   CREATE_FILE: `${environment.endpointUrl}/files/create`,
   UPLOAD_FILE: `${environment.endpointUrl}/files/upload`,
 } as const;
+
+export const FACEBOOK_PERMISSIONS = ['user_photos'];

@@ -14,6 +14,7 @@ import { AppFooterModule } from '../reusable/app-footer';
 import { AppMenuModule } from '../reusable/app-menu/app-menu.module';
 import { ReviewService } from './review.service';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { FbGalleryModule } from '../reusable/fb-gallery/fb-gallery.module';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
     FilterButtonsModule,
     AppFooterModule,
     AppMenuModule,
+    FbGalleryModule,
   ],
   declarations: [
     ReviewPage,

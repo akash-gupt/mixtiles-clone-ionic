@@ -4,6 +4,8 @@ import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import { Crop, CropOptions } from '@ionic-native/crop/ngx';
 import { File as FileReader } from '@ionic-native/file/ngx';
 import { FrameType, SelectImageEvRes } from 'src/app/app.constant';
+import { AlbumService } from 'src/app/services/album.service';
+import { FbGalleryService } from 'src/app/reusable/fb-gallery/fb-gallery.service';
 
 @Component({
   selector: 'app-review-upload-button',
@@ -25,7 +27,9 @@ export class ReviewUploadButtonComponent implements OnInit {
     public actionSheetController: ActionSheetController,
     private file: FileReader,
     private crop: Crop,
-    private camera: Camera
+    private camera: Camera,
+    private albumService: AlbumService,
+    private fbGalleryService: FbGalleryService
   ) {}
 
   ngOnInit() {}
@@ -46,6 +50,7 @@ export class ReviewUploadButtonComponent implements OnInit {
           icon: 'logo-facebook',
           handler: () => {
             console.log('Share clicked');
+            this.fbGalleryService.open();
           },
         },
         {

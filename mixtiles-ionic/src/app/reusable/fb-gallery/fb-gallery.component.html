@@ -1,0 +1,8 @@
+<app-gallery
+  (onClose)="closeGallery()"
+  [items]="fbImages | fbGalley"
+  (loadMore)="paginatePhotos($event)"
+  [nextToken]="after"
+  [loading]="loading"
+  (onSelect)="onSelect($event)"
+></app-gallery>
