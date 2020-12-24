@@ -15,6 +15,8 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { Instagram } from '@ionic-native/instagram/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -34,6 +36,7 @@ import { Instagram } from '@ionic-native/instagram/ngx';
     Facebook,
     Camera,
     Instagram,
+    WebView,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],

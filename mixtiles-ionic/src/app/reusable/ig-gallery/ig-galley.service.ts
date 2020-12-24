@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { IgGalleryComponent } from './ig-gallery.component';
+import { IgGalleryModalComponent } from './ig-gallery-modal/ig-gallery-modal.component';
 import { IgService } from './ig.service';
+import { FacebookPhotoResponse } from './types';
 
 @Injectable()
 export class IgGalleyService {
@@ -9,13 +10,13 @@ export class IgGalleyService {
 
   constructor(
     private modalController: ModalController,
-    private fbService: IgService
+    private igService: IgService
   ) {}
 
   private async getModal() {
     if (!this.modal) {
       this.modal = await this.modalController.create({
-        component: IgGalleryComponent,
+        component: IgGalleryModalComponent,
       });
     }
 
@@ -25,7 +26,7 @@ export class IgGalleyService {
   async open() {
     const modal = await this.getModal();
 
-    const status = await this.fbService.login();
+    const status = await this.igService.login();
     if (status) {
       await modal.present();
     }
@@ -35,5 +36,9 @@ export class IgGalleyService {
     const modal = await this.getModal();
     await modal.dismiss();
     this.modal = null;
+  }
+
+  async paginatePhotos(after: string = null): Promise<FacebookPhotoResponse> {
+    return this.igService.paginatePhotos(after);
   }
 }

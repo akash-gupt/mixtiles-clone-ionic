@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FbGalleryService } from './fb-gallery.service';
-import { FbService } from './fb.service';
 import { FacebookPhotoResponse } from './types';
 
 @Component({
@@ -13,10 +12,7 @@ export class FbGalleryComponent implements OnInit {
   loading = false;
   fbImages: FacebookPhotoResponse['data'] = [];
 
-  constructor(
-    private fb: FbService,
-    private fbGalleryService: FbGalleryService
-  ) {}
+  constructor(private fbGalleryService: FbGalleryService) {}
 
   ngOnInit() {
     this.paginatePhotos();
@@ -24,18 +20,19 @@ export class FbGalleryComponent implements OnInit {
 
   async paginatePhotos(nextToken = this.after) {
     this.loading = true;
-    const response = await this.fb.paginatePhotos(nextToken);
+    const response = await this.fbGalleryService.paginatePhotos(nextToken);
     this.fbImages = [...this.fbImages, ...response.data];
     this.after = response?.paging?.cursors?.after;
     this.loading = false;
   }
 
   async closeGallery() {
+    console.log('clicked closeGallery');
     await this.fbGalleryService.close();
   }
 
   async onSelect(index: number) {
-    console.log(index);
-    await this.closeGallery();
+    const selectedData = this.fbImages[index];
+    await this.fbGalleryService.selectAndClose(selectedData);
   }
 }

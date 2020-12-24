@@ -6,6 +6,7 @@ import { File as FileReader } from '@ionic-native/file/ngx';
 import { FrameType, SelectImageEvRes } from 'src/app/app.constant';
 import { AlbumService } from 'src/app/services/album.service';
 import { FbGalleryService } from 'src/app/reusable/fb-gallery/fb-gallery.service';
+import { IgGalleyService } from 'src/app/reusable/ig-gallery/ig-galley.service';
 
 @Component({
   selector: 'app-review-upload-button',
@@ -29,7 +30,8 @@ export class ReviewUploadButtonComponent implements OnInit {
     private crop: Crop,
     private camera: Camera,
     private albumService: AlbumService,
-    private fbGalleryService: FbGalleryService
+    private fbGalleryService: FbGalleryService,
+    private igGalleyService: IgGalleyService
   ) {}
 
   ngOnInit() {}
@@ -49,17 +51,25 @@ export class ReviewUploadButtonComponent implements OnInit {
           text: 'Import from Facebook',
           icon: 'logo-facebook',
           handler: () => {
-            console.log('Share clicked');
-            this.fbGalleryService.open();
+            this.fbGalleryService.open().then(() => {
+              this.fbGalleryService.onDismiss().then((response) => {
+                console.log('====dismissed =====', response?.data);
+
+                if (response?.data) {
+                  this.cropImage(response?.data?.imagePath);
+                }
+              });
+            });
           },
         },
-        {
-          text: 'Import from Instagram',
-          icon: 'logo-instagram',
-          handler: () => {
-            console.log('Play clicked');
-          },
-        },
+        // {
+        //   text: 'Import from Instagram',
+        //   icon: 'logo-instagram',
+        //   handler: () => {
+        //     console.log('Play clicked');
+        //     this.igGalleyService.open();
+        //   },
+        // },
       ],
     });
     await actionSheet.present();

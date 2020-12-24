@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { IgGalleyService } from './ig-galley.service';
-import { IgService } from './ig.service';
 import { FacebookPhotoResponse } from './types';
 
 @Component({
@@ -13,19 +12,16 @@ export class IgGalleryComponent implements OnInit {
   loading = false;
   igImages: FacebookPhotoResponse['data'] = [];
 
-  constructor(
-    private fb: IgService,
-    private igGalleryService: IgGalleyService
-  ) {}
+  constructor(private igGalleryService: IgGalleyService) {}
 
   ngOnInit() {
-    this.paginatePhotos();
+    // this.paginatePhotos();
   }
 
   async paginatePhotos(nextToken = this.after) {
     this.loading = true;
-    const response = await this.fb.paginatePhotos(nextToken);
-    this.fbImages = [...this.fbImages, ...response.data];
+    const response = await this.igGalleryService.paginatePhotos(nextToken);
+    this.igImages = [...this.igImages, ...response.data];
     this.after = response?.paging?.cursors?.after;
     this.loading = false;
   }

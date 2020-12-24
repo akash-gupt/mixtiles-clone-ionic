@@ -1,47 +1,52 @@
 import { Injectable } from '@angular/core';
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
-import { Instagram } from '@ionic-native/instagram/ngx';
 import { FACEBOOK_PERMISSIONS } from 'src/app/app.constant';
 import { FacebookPhotoResponse } from './types';
+import { Instagram, OauthCordova } from 'ionic-cordova-oauth';
 
 @Injectable()
 export class IgService {
-  constructor(private fb: Facebook, private ig: Instagram) {}
+  private oauth: OauthCordova = new OauthCordova();
+  private instagramProvider: Instagram = new Instagram({
+    clientId: '905863833554626',
+    appScope: ['email'],
+  });
 
-  login(): Promise<boolean> {
-    return new Promise((resolve) => {
-      this.fb.getLoginStatus().then((v) => {
-        if (!v) {
-          this.fb
-            .login(FACEBOOK_PERMISSIONS)
-            .then((res: FacebookLoginResponse) => {
-              console.log('Logged into Facebook!', res);
-              resolve(true);
-            })
-            .catch((e) => {
-              console.log('Error logging into Facebook', e);
-              resolve(false);
-            });
-        } else {
-          console.log('Logged into already!', v);
-          resolve(true);
-        }
-      });
-    });
+  constructor() {}
+
+  async login(): Promise<boolean> {
+    this.oauth.logInVia(this.instagramProvider).then(
+      (success) => {
+        console.log('SUCCESS: ', success);
+      },
+      (error) => {
+        console.log('ERROR: ', error);
+      }
+    );
+    return false;
+    // return new Promise((resolve) => {
+    //   this.fb.getLoginStatus().then((v) => {
+    //     if (!v) {
+    //       this.fb
+    //         .login(FACEBOOK_PERMISSIONS)
+    //         .then((res: FacebookLoginResponse) => {
+    //           console.log('Logged into Facebook!', res);
+    //           resolve(true);
+    //         })
+    //         .catch((e) => {
+    //           console.log('Error logging into Facebook', e);
+    //           resolve(false);
+    //         });
+    //     } else {
+    //       console.log('Logged into already!', v);
+    //       resolve(true);
+    //     }
+    //   });
+    // });
   }
 
-  async paginatePhotos(after: string = null): Promise<FacebookPhotoResponse> {
-    let url = `me/photos/uploaded?fields=picture,images,height,width&limit=20`;
-
-    if (after) {
-      url = url + `&after=${after}`;
-    }
-
-    const photos: FacebookPhotoResponse = await this.fb.api(
-      url,
-      FACEBOOK_PERMISSIONS
-    );
-
-    return photos;
+  async paginatePhotos(after: string = null) {
+    return {
+      data: [],
+    } as any;
   }
 }

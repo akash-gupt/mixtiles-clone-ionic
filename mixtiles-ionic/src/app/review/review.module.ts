@@ -15,6 +15,7 @@ import { AppMenuModule } from '../reusable/app-menu/app-menu.module';
 import { ReviewService } from './review.service';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { FbGalleryModule } from '../reusable/fb-gallery/fb-gallery.module';
+import { IgGalleryModule } from '../reusable/ig-gallery/ig-gallery.module';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { FbGalleryModule } from '../reusable/fb-gallery/fb-gallery.module';
     AppFooterModule,
     AppMenuModule,
     FbGalleryModule,
+    IgGalleryModule,
   ],
   declarations: [
     ReviewPage,
