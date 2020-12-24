@@ -12,6 +12,7 @@ import { ReviewUploadButtonComponent } from './review-upload-button';
 import { FrameComponent } from './frame/frame.component';
 import { AppFooterModule } from '../reusable/app-footer';
 import { AppMenuModule } from '../reusable/app-menu/app-menu.module';
+import { ReviewService } from './review.service';
 
 @NgModule({
   imports: [
@@ -29,5 +30,6 @@ import { AppMenuModule } from '../reusable/app-menu/app-menu.module';
     FrameComponent,
     ReviewUploadButtonComponent,
   ],
+  providers: [ReviewService],
 })
 export class ReviewPageModule {}

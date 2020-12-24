@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AES, enc } from 'crypto-js';
 import { Storage } from '@ionic/storage';
 import { SECRET_KEY } from '../app.constant';
 
@@ -12,24 +11,13 @@ export class StorageService {
   constructor(private storage: Storage) {}
 
   save(key: string, value: any): Promise<void> {
-    const stringified = JSON.stringify(value);
-    const encrypted = AES.encrypt(stringified, this.secretKey);
     return new Promise((resolve) => {
-      this.storage.set(key, encrypted.toString()).then(() => resolve());
+      this.storage.set(key, value).then(() => resolve());
     });
   }
 
   load(key: string): Promise<any> {
-    return new Promise((resolve) => {
-      this.storage.get(key).then((res) => {
-        if (res.value != null) {
-          const decrypted = AES.decrypt(res.value, this.secretKey);
-          const object = JSON.parse(decrypted.toString(enc.Utf8));
-          resolve(object);
-        }
-        resolve(null);
-      });
-    });
+    return this.storage.get(key);
   }
 
   remove(key: string): Promise<void> {

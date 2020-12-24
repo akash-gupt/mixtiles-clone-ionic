@@ -1,62 +1,79 @@
 import { Injectable } from '@angular/core';
+import { HTTP } from '@ionic-native/http/ngx';
+import { Endpoints, RegisterBody, TOKEN_STORAGE_KEY } from '../app.constant';
 import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private authenticated: boolean;
+  constructor(private http: HTTP, private storage: StorageService) {}
 
-  constructor(private storage: StorageService) {}
+  async login(email: string, password: string): Promise<boolean> {
+    try {
+      const response = await this.http.post(
+        Endpoints.LOGIN,
+        {
+          email,
+          password,
+        },
+        {}
+      );
 
-  login(username: string, password: string): Promise<boolean> {
-    return new Promise((resolve) => {
-      this.storage.load('account').then((account) => {
-        if (account) {
-          if (account.username == username && account.password === password) {
-            this.authenticated = true;
-            resolve(true);
-          }
-        }
-        resolve(false);
-      });
-    });
+      console.log('[Login] response => ', response.data);
+
+      if (!response.data) {
+        return false;
+      }
+
+      const data = JSON.parse(response.data);
+      console.log('[Login] response => ', data?.accessToken);
+      const token = data?.accessToken;
+      await this.storage.save(TOKEN_STORAGE_KEY, token);
+
+      return true;
+    } catch (error) {
+      console.error('[Login] error => ', error);
+      return false;
+    }
   }
 
-  logout() {
-    this.authenticated = false;
+  async logout() {
+    await this.storage.remove(TOKEN_STORAGE_KEY);
   }
 
-  isAuthenticated(): boolean {
-    return this.authenticated;
+  async isAuthenticated(): Promise<boolean> {
+    const token = await this.storage.load(TOKEN_STORAGE_KEY);
+    console.log('[isAuthenticated] token = ', token);
+    if (!token || token === null) {
+      return false;
+    }
+
+    return true;
   }
 
-  registerAccount(account: any): Promise<void> {
-    return new Promise((resolve) => {
-      this.isRegistered().then((isRegistered) => {
-        // so registrar se nao estiver registrado
-        if (!isRegistered) {
-          this.storage.save('account', account);
-          resolve();
-        }
-      });
-    });
+  async getToken(): Promise<string | null> {
+    return this.storage.load(TOKEN_STORAGE_KEY);
   }
 
-  isRegistered(): Promise<boolean> {
-    return new Promise((resolve) => {
-      this.storage.load('account').then((res) => {
-        resolve(!!res);
-      });
-    });
+  async registerAccount(registerBody: RegisterBody): Promise<boolean> {
+    try {
+      await this.http.post(Endpoints.REGISTER, registerBody, {});
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
-  reset(): Promise<void> {
-    return new Promise((resolve) => {
-      this.storage.remove('account').then(() => {
-        this.authenticated = false;
-        resolve();
-      });
-    });
+  async getHeaders() {
+    const token = await this.getToken();
+
+    const headers = {
+      Authorization: 'Bearer ' + token,
+      // 'Content-Type': 'application/json',
+    };
+
+    console.log('[getHeaders] headers => ', JSON.stringify(headers));
+    return headers;
   }
 }

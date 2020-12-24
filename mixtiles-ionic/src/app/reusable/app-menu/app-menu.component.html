@@ -6,17 +6,17 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item>
+      <ion-item *ngIf="!isAuthenticated">
         <ion-button type="clear" fill (click)="toggle(); login()">
           <ion-label class="menu-item-label">Login</ion-label>
         </ion-button>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="!isAuthenticated">
         <ion-button type="clear" fill (click)="toggle(); register()">
           <ion-label class="menu-item-label">Register</ion-label>
         </ion-button>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="isAuthenticated">
         <ion-button type="clear" fill (click)="toggle(); logout()">
           <ion-label class="menu-item-label">Logout</ion-label>
         </ion-button>

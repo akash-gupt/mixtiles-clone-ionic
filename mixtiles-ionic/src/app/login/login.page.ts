@@ -15,6 +15,7 @@ export class LoginPage {
     email: [
       { type: 'required', message: 'Required' },
       { type: 'minlength', message: 'Min 3 characters' },
+      { type: 'email', message: 'Invalid email' },
     ],
     password: [{ type: 'required', message: 'Required' }],
   };
@@ -26,14 +27,17 @@ export class LoginPage {
     public toastController: ToastController
   ) {
     this.form = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.minLength(3)]],
+      email: [
+        '',
+        [Validators.required, Validators.minLength(3), Validators.email],
+      ],
       password: ['', [Validators.required]],
     });
   }
 
   ionViewWillEnter() {
-    this.authService.isRegistered().then((isRegistered) => {
-      if (!isRegistered) this.router.navigate(['/register']);
+    this.authService.isAuthenticated().then((isAuthenticated) => {
+      if (isAuthenticated) this.router.navigate(['/review']);
     });
   }
 
@@ -50,7 +54,7 @@ export class LoginPage {
     const password = this.form.get('password').value;
     this.authService.login(email, password).then((res) => {
       if (res) {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/review']);
       } else {
         this.presentToast('Incorrect credential.', 3000);
       }

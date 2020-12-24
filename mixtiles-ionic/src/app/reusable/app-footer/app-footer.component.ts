@@ -12,4 +12,9 @@ export class AppFooterComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  onClick() {
+    console.log('====');
+    this.onPress.emit();
+  }
 }

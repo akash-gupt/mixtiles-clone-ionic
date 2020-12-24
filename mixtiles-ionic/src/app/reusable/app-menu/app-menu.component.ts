@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { AuthenticationService } from 'src/app/services';
 
 @Component({
   selector: 'app-menu',
@@ -8,9 +9,19 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['./app-menu.component.scss'],
 })
 export class AppMenuComponent implements OnInit {
-  constructor(private menu: MenuController, private router: Router) {}
+  isAuthenticated = false;
 
-  ngOnInit() {}
+  constructor(
+    private auth: AuthenticationService,
+    private menu: MenuController,
+    private router: Router
+  ) {}
+
+  async ngOnInit() {
+    this.auth.isAuthenticated().then((isAuthenticated) => {
+      this.isAuthenticated = isAuthenticated;
+    });
+  }
 
   toggle() {
     this.menu.toggle();
@@ -25,6 +36,8 @@ export class AppMenuComponent implements OnInit {
   }
 
   logout() {
-    this.router.navigateByUrl('/home');
+    this.auth.logout().then(() => {
+      this.router.navigateByUrl('/home');
+    });
   }
 }
