@@ -1,0 +1,6 @@
+
+To setup it
+
+Facebook 
+
+Just goto package.json and change the app Id.
