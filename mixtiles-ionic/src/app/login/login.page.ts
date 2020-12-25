@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { AuthenticationService } from '../services';
 
 @Component({
@@ -24,7 +24,8 @@ export class LoginPage {
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
     private router: Router,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private loading: LoadingController
   ) {
     this.form = this.formBuilder.group({
       email: [
@@ -49,16 +50,26 @@ export class LoginPage {
     toast.present();
   }
 
-  submitForm() {
+  async submitForm() {
+    const loader = await this.loading.create({ message: 'loading...' });
+
     const email = this.form.get('email').value;
     const password = this.form.get('password').value;
-    this.authService.login(email, password).then((res) => {
-      if (res) {
+
+    try {
+      await loader.present();
+      const response = await this.authService.login(email, password);
+
+      await loader.dismiss();
+
+      if (response) {
         this.router.navigate(['/review']);
       } else {
         this.presentToast('Incorrect credential.', 3000);
       }
-    });
+    } finally {
+      await loader.dismiss();
+    }
   }
 
   register() {

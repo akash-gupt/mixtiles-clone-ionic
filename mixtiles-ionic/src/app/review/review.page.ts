@@ -5,7 +5,7 @@ import {
   MenuController,
 } from '@ionic/angular';
 
-import { Endpoints, FrameType, SelectImageEvRes } from '../app.constant';
+import { FrameType, SelectImageEvRes } from '../app.constant';
 import { ReviewService } from './review.service';
 
 @Component({
@@ -20,7 +20,6 @@ export class ReviewPage implements OnInit {
     filePath: null,
     imageName: null,
   };
-  loading: HTMLIonLoadingElement;
 
   constructor(
     private menu: MenuController,
@@ -29,12 +28,7 @@ export class ReviewPage implements OnInit {
     public loadingController: LoadingController
   ) {}
 
-  async ngOnInit() {
-    this.loading = await this.loadingController.create({
-      message: 'Loading...',
-      duration: 2000,
-    });
-  }
+  ngOnInit() {}
 
   onCheckout() {}
 
@@ -88,7 +82,12 @@ export class ReviewPage implements OnInit {
   }
 
   async upload() {
-    await this.loading.present();
+    const loading = await this.loadingController.create({
+      message: 'Loading...',
+      duration: 2000,
+    });
+
+    await loading.present();
 
     const response = await this.reviewService.upload(
       this.selectedImage.filePath,
@@ -101,6 +100,6 @@ export class ReviewPage implements OnInit {
       this.failedAlert();
     }
 
-    await this.loading.dismiss();
+    await loading.dismiss();
   }
 }

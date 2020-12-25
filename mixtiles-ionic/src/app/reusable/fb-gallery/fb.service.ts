@@ -6,12 +6,12 @@ import { FacebookPhotoResponse } from './types';
 
 @Injectable()
 export class FbService {
-  constructor(private fb: Facebook, private ig: Instagram) {}
+  constructor(private fb: Facebook) {}
 
   loginFb(): Promise<boolean> {
     return new Promise((resolve) => {
       this.fb.getLoginStatus().then((v) => {
-        if (!v) {
+        if (!v || v?.status === 'unknown') {
           this.fb
             .login(FACEBOOK_PERMISSIONS)
             .then((res: FacebookLoginResponse) => {

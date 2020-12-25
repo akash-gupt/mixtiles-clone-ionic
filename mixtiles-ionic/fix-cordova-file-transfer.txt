@@ -9,3 +9,28 @@ https://github.com/apache/cordova-plugin-file-transfer/issues/258
     setup cordova plugin facebook
 
     change app id in MyApp-Info.plist
+
+    # location of keystore
+storeFile=/release.keystore
+
+# Key alias
+keyAlias=release
+
+# Store password
+storePassword=15639853
+
+# Key password
+keyPassword=15639853
+
+goto android/app/build.gradle for release setup
+key.store=release.jks
+key.store.password=15639853
+key.alias=release
+key.alias.password=15639853
+
+target=android-25
+android.library.reference.1=CordovaLib
+storePassword=15639853
+keyPassword=15639853
+keyAlias=release
+storeFile=release.jks

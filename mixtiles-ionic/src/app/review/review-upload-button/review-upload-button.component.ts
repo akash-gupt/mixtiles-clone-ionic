@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, Platform } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import { Crop, CropOptions } from '@ionic-native/crop/ngx';
 import { File as FileReader } from '@ionic-native/file/ngx';
@@ -31,7 +31,7 @@ export class ReviewUploadButtonComponent implements OnInit {
     private camera: Camera,
     private albumService: AlbumService,
     private fbGalleryService: FbGalleryService,
-    private igGalleyService: IgGalleyService
+    private platform: Platform
   ) {}
 
   ngOnInit() {}
@@ -90,13 +90,22 @@ export class ReviewUploadButtonComponent implements OnInit {
         this.cropImage(imageData);
       },
       (err) => {
+        alert(`pick image error ${err}`);
         // Handle error
       }
     );
   }
 
-  cropImage(fileUrl) {
-    this.crop.crop(fileUrl, { quality: 50 }).then(
+  cropImage(fileUrl: string) {
+    let fixedFileUrl = fileUrl;
+
+    const isAndroid = this.platform.is('android');
+
+    if (!fixedFileUrl.includes('file://') && isAndroid) {
+      fixedFileUrl = `file://${fixedFileUrl}`;
+    }
+
+    this.crop.crop(fixedFileUrl, { quality: 50 }).then(
       (newPath) => {
         this.showCroppedImage(newPath.split('?')[0]);
       },

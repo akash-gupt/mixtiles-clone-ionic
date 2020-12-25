@@ -15,7 +15,7 @@
   <form [formGroup]="form" (ngSubmit)="submitForm()">
     <ion-item>
       <ion-label position="floating">Email</ion-label>
-      <ion-input type="text" formControlName="email"></ion-input>
+      <ion-input type="text" formControlName="email" type="email"></ion-input>
     </ion-item>
     <div class="validation-error">
       <ng-container

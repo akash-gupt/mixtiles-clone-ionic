@@ -12,7 +12,8 @@
     "e2e": "ng e2e",
     "ios": "ionic cordova run ios --livereload --consolelogs",
     "android": "ionic cordova run android --livereload --consolelogs",
-    "emulate:android": "ionic cordova run android --livereload --consolelogs --emulator --external --ssl --debug"
+    "emulate:android": "ionic cordova run android --livereload --consolelogs --emulator --external --ssl --debug",
+    "release:android": "ionic cordova build android --prod --release --buildConfig=build.json"
   },
   "private": true,
   "dependencies": {
@@ -31,7 +32,6 @@
     "@ionic-native/http": "^5.30.0",
     "@ionic-native/in-app-browser": "^5.30.0",
     "@ionic-native/instagram": "^5.30.0",
-    "@ionic-native/ionic-webview": "^5.30.0",
     "@ionic-native/splash-screen": "^5.0.0",
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^5.0.0",
@@ -67,7 +67,6 @@
     "cordova-plugin-file-transfer": "^1.7.1",
     "cordova-plugin-inappbrowser": "^4.1.0",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
-    "cordova-plugin-ionic-webview": "^4.2.1",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
     "cordova-plugin-whitelist": "^1.3.3",
@@ -90,7 +89,6 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-camera": {},
       "cordova-plugin-crop": {},
@@ -108,7 +106,8 @@
       "cordova-plugin-inappbrowser": {}
     },
     "platforms": [
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }
