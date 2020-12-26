@@ -11,8 +11,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ios": "ionic cordova run ios --livereload --consolelogs",
-    "android": "ionic cordova run android --livereload --consolelogs",
-    "emulate:android": "ionic cordova run android --livereload --consolelogs --emulator --external --ssl --debug",
+    "android:debug": "ionic cordova run android --livereload --consolelogs --buildConfig=build.json",
+    "android":"ionic cordova run android --prod --release --buildConfig=build.json",
     "release:android": "ionic cordova build android --prod --release --buildConfig=build.json"
   },
   "private": true,
