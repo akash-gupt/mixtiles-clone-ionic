@@ -25,7 +25,7 @@ export class FileController {
   constructor(public readonly fileService: FileService) {}
 
   @Post('create')
-  create(@GetUserId() userId: string, @Body() createDto: CreateFileDto) {
+  create(@GetUserId() userId: string, @Body() createDto: any) {
     console.log(JSON.stringify(createDto));
     return this.fileService.createFile(userId, createDto);
   }

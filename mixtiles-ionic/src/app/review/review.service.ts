@@ -66,7 +66,7 @@ export class ReviewService {
     for (let index = 0; index < images.length; index++) {
       const item = images[index];
       const e = await this.upload(item.filePath, item.imageName);
-      uploadedFileNames.push(String(e.filename));
+      uploadedFileNames.push(String(e.filename).toString());
     }
 
     return uploadedFileNames;
