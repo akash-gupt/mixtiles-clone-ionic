@@ -9,15 +9,11 @@ import {
 
 export class CreateFileDto {
   @IsDefined()
-  @IsNotEmpty({ each: true })
-  @IsString({ each: true })
-  @ApiProperty({ isArray: true })
   readonly fileNames: string[];
 
   @IsDefined()
   @IsNotEmpty()
   @IsString()
-  @ApiProperty()
   readonly frameType: string;
 }
 
