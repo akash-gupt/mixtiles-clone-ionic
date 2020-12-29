@@ -19,11 +19,12 @@ export class FileService {
         const fileName = fileNames[index];
         const file = this.fileRepository.create({
           userId,
-          fileName,
+          fileName: String(fileName),
           frameType,
         });
-        const createdPage = await this.fileRepository.save(file);
-        records.push(createdPage);
+        const created = await this.fileRepository.save(file);
+        console.log(created);
+        records.push(created);
       }
 
       return records;

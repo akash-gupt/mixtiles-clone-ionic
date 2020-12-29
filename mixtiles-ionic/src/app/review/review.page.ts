@@ -69,7 +69,6 @@ export class ReviewPage implements OnInit {
   async upload() {
     const loading = await this.loadingController.create({
       message: 'Loading...',
-      duration: 2000,
     });
 
     await loading.present();
