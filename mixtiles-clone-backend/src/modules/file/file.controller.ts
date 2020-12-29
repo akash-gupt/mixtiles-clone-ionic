@@ -27,7 +27,7 @@ export class FileController {
   @Post('create')
   create(@GetUserId() userId: string, @Body() createDto: CreateFileDto) {
     console.log(JSON.stringify(createDto));
-    // return this.fileService.createFile(userId, createDto);
+    return this.fileService.createFile(userId, createDto);
   }
 
   @Post('upload')

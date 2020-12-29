@@ -12,15 +12,23 @@ export class FileService {
   ) {}
 
   async createFile(userId: string, createFileDto: CreateFileDto) {
-    // try {
-    //   const file = this.fileRepository.create({
-    //     userId,
-    //     ...createFileDto,
-    //   });
-    //   const createdPage = await this.fileRepository.save(file);
-    //   return createdPage;
-    // } catch (error) {
-    //   throw new HttpException(error, HttpStatus.BAD_REQUEST);
-    // }
+    const records = [];
+    const { fileNames, frameType } = createFileDto;
+    try {
+      for (let index = 0; index < fileNames.length; index++) {
+        const fileName = fileNames[index];
+        const file = this.fileRepository.create({
+          userId,
+          fileName,
+          frameType,
+        });
+        const createdPage = await this.fileRepository.save(file);
+        records.push(createdPage);
+      }
+
+      return records;
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_REQUEST);
+    }
   }
 }
