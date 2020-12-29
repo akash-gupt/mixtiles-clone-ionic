@@ -1,34 +1,40 @@
-<button class="ion-activatable ripple-parent" (click)="presentActionSheet()">
-  <div
-    class="UploadButton animated round"
-    *ngIf="!croppedImagePath; else selectedTemp"
-  >
-    <div class="plus-icon">
-      <svg width="59" height="59" viewBox="0 0 59 59" fill="none">
-        <rect
-          x="24.6003"
-          y="0.107956"
-          width="10.2462"
-          height="58.1695"
-          rx="5.1231"
-          fill="#FF0077"
-        ></rect>
-        <rect
-          x="58.8083"
-          y="24.0696"
-          width="10.2462"
-          height="58.1695"
-          rx="5.1231"
-          transform="rotate(90 58.8083 24.0696)"
-          fill="#FF0077"
-        ></rect>
-      </svg>
-    </div>
-
-    <ion-ripple-effect> </ion-ripple-effect>
+<div class="scrolling-wrapper-flexbox">
+  <div *ngFor="let item of files; let i = index">
+    <button (click)="presentCropSheet(i)">
+      <app-frame [fileUrl]="item.base64" [frameType]="frameType"></app-frame>
+    </button>
   </div>
-  <p *ngIf="isLoading">Loading ...</p>
-  <ng-template #selectedTemp>
-    <app-frame [fileUrl]="croppedImagePath" [frameType]="frameType"></app-frame>
-  </ng-template>
-</button>
+  <div class="add-btn">
+    <button
+      class="ion-activatable ripple-parent"
+      (click)="presentUploadSheet()"
+    >
+      <div class="UploadButton animated round">
+        <div class="plus-icon">
+          <svg width="59" height="59" viewBox="0 0 59 59" fill="none">
+            <rect
+              x="24.6003"
+              y="0.107956"
+              width="10.2462"
+              height="58.1695"
+              rx="5.1231"
+              fill="#FF0077"
+            ></rect>
+            <rect
+              x="58.8083"
+              y="24.0696"
+              width="10.2462"
+              height="58.1695"
+              rx="5.1231"
+              transform="rotate(90 58.8083 24.0696)"
+              fill="#FF0077"
+            ></rect>
+          </svg>
+        </div>
+
+        <ion-ripple-effect> </ion-ripple-effect>
+      </div>
+      <p *ngIf="isLoading">Loading ...</p>
+    </button>
+  </div>
+</div>

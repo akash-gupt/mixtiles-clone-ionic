@@ -3,8 +3,9 @@
     <app-review-upload-button
       [croppedImagePath]="croppedImagePath"
       [frameType]="frameType"
+      [files]="files"
       (onChange)="onChange.emit($event)"
+      (onChangeFiles)="onChangeFiles.emit($event)"
     ></app-review-upload-button>
-    <div class="no-tiles-text">Pick some photos to get started</div>
   </div>
 </div>

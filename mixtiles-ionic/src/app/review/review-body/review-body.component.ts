@@ -8,8 +8,10 @@ import { FrameType, SelectImageEvRes } from 'src/app/app.constant';
 })
 export class ReviewBodyComponent implements OnInit {
   @Input() croppedImagePath: string = null;
+  @Input() files: SelectImageEvRes[] = [];
   @Input() frameType: FrameType = 'bold';
   @Output() onChange = new EventEmitter<SelectImageEvRes>();
+  @Output() onChangeFiles = new EventEmitter<SelectImageEvRes[]>();
 
   constructor() {}
 

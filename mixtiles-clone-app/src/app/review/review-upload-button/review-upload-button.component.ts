@@ -65,25 +65,25 @@ export class ReviewUploadButtonComponent implements OnInit {
     await actionSheet.present();
   }
 
-  pickImage(sourceType) {
-    const options: CameraOptions = {
-      quality: 100,
-      sourceType: sourceType,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-    };
-    this.camera.getPicture(options).then(
-      (imageData) => {
-        // imageData is either a base64 encoded string or a file URI
-        // If it's base64 (DATA_URL):
-        this.cropImage(imageData);
-      },
-      (err) => {
-        // Handle error
-      }
-    );
-  }
+  // pickImage(sourceType) {
+  //   const options: CameraOptions = {
+  //     quality: 100,
+  //     sourceType: sourceType,
+  //     destinationType: this.camera.DestinationType.FILE_URI,
+  //     encodingType: this.camera.EncodingType.JPEG,
+  //     mediaType: this.camera.MediaType.PICTURE,
+  //   };
+  //   this.camera.getPicture(options).then(
+  //     (imageData) => {
+  //       // imageData is either a base64 encoded string or a file URI
+  //       // If it's base64 (DATA_URL):
+  //       this.cropImage(imageData);
+  //     },
+  //     (err) => {
+  //       // Handle error
+  //     }
+  //   );
+  // }
 
   cropImage(fileUrl) {
     this.crop.crop(fileUrl, { quality: 50 }).then(
@@ -115,18 +115,19 @@ export class ReviewUploadButtonComponent implements OnInit {
     );
   }
 
-  // pickImage() {
-  //   this.imagePicker.getPictures(this.imagePickerOptions).then(
-  //     (results) => {
-  //       for (var i = 0; i < results.length; i++) {
-  //         this.cropImage(results[i]);
-  //       }
-  //     },
-  //     (err) => {
-  //       alert(err);
-  //     }
-  //   );
-  // }
+  pickImage() {
+    this.imagePicker.getPictures(this.imagePickerOptions).then(
+      (results) => {
+        for (var i = 0; i < results.length; i++) {
+          // this.cropImage(results[i]);
+          console.log(results[i]);
+        }
+      },
+      (err) => {
+        alert(err);
+      }
+    );
+  }
 
   // cropImage(imgPath) {
   //   console.log('cropping ', imgPath);

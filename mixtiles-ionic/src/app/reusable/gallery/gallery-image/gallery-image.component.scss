@@ -11,4 +11,13 @@
   border-color: white;
   border-style: solid;
   background-color: white;
+
+  position: relative;
+}
+
+.checkbox {
+  position: absolute;
+  top: 10;
+  left: 0;
+  z-index: 999;
 }

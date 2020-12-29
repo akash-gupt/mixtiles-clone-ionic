@@ -15,6 +15,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { Instagram } from '@ionic-native/instagram/ngx';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,6 +36,7 @@ import { Instagram } from '@ionic-native/instagram/ngx';
     Facebook,
     Camera,
     Instagram,
+    ImagePicker,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],

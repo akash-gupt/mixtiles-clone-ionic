@@ -31,8 +31,13 @@ export class FbGalleryComponent implements OnInit {
     await this.fbGalleryService.close();
   }
 
-  async onSelect(index: number) {
-    const selectedData = this.fbImages[index];
-    await this.fbGalleryService.selectAndClose(selectedData);
+  async onSelect(indexes: number[]) {
+    const selectedData = [];
+
+    for (let index = 0; index < indexes.length; index++) {
+      selectedData.push(this.fbImages[index]);
+    }
+
+    await this.fbGalleryService.selectImagesAndClose(selectedData);
   }
 }

@@ -7,6 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class GalleryImageComponent implements OnInit {
   @Input() imageUrl: string;
+  @Input() checked: boolean = false;
   @Output() onSelect = new EventEmitter<string>();
 
   constructor() {}

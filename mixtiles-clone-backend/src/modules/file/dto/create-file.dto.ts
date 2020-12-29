@@ -1,12 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDefined, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsDefined,
+  IsNotEmpty,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 
 export class CreateFileDto {
   @IsDefined()
-  @IsNotEmpty()
-  @IsString()
-  @ApiProperty()
-  readonly fileName: string;
+  @IsNotEmpty({ each: true })
+  @IsString({ each: true })
+  @ApiProperty({ isArray: true })
+  readonly fileNames: string[];
 
   @IsDefined()
   @IsNotEmpty()
@@ -14,3 +20,5 @@ export class CreateFileDto {
   @ApiProperty()
   readonly frameType: string;
 }
+
+export class FileDto {}

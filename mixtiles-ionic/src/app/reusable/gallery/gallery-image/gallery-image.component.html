@@ -1,3 +1,9 @@
 <button class="photo-container" (click)="onSelect.emit(imageUrl)">
   <img [src]="[imageUrl]" />
+
+  <ion-checkbox
+    color="primary"
+    [checked]="checked"
+    class="checkbox"
+  ></ion-checkbox>
 </button>

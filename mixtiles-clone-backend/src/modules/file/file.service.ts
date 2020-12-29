@@ -12,15 +12,15 @@ export class FileService {
   ) {}
 
   async createFile(userId: string, createFileDto: CreateFileDto) {
-    try {
-      const file = this.fileRepository.create({
-        userId,
-        ...createFileDto,
-      });
-      const createdPage = await this.fileRepository.save(file);
-      return createdPage;
-    } catch (error) {
-      throw new HttpException(error, HttpStatus.BAD_REQUEST);
-    }
+    // try {
+    //   const file = this.fileRepository.create({
+    //     userId,
+    //     ...createFileDto,
+    //   });
+    //   const createdPage = await this.fileRepository.save(file);
+    //   return createdPage;
+    // } catch (error) {
+    //   throw new HttpException(error, HttpStatus.BAD_REQUEST);
+    // }
   }
 }

@@ -5,6 +5,7 @@
   display: flex;
   width: 253px;
   height: 253px;
+  max-height: 253px;
   flex-shrink: 0;
   position: relative;
   margin-right: 10px;
@@ -19,6 +20,7 @@
     overflow: hidden;
     width: 236px;
     height: 236px;
+    max-height: 236px;
     margin-left: -5px;
     margin-top: -13px;
     animation: fade-in 0.4s;
@@ -27,6 +29,7 @@
       z-index: 1;
       opacity: 1;
       transition: opacity 0.3s;
+      height: 100%;
     }
 
     // for edge

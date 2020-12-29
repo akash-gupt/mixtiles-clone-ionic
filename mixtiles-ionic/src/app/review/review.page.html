@@ -16,13 +16,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <app-review-head (onSelectionChange)="frameType =$event"></app-review-head>
+<app-review-head (onSelectionChange)="frameType =$event"></app-review-head>
+
+<ion-content [scrollEvents]="true">
   <app-review-body
     [frameType]="frameType"
     [croppedImagePath]="selectedImage.base64"
+    [files]="selectedFiles"
     (onChange)="selectedImage = $event"
+    (onChangeFiles)="selectedFiles =$event"
   ></app-review-body>
-  <app-footer [title]="'Save'" (onPress)="upload()"></app-footer>
 </ion-content>
+
+<app-footer [title]="'Save'" (onPress)="upload()"></app-footer>
 <app-menu></app-menu>

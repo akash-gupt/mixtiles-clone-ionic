@@ -20,6 +20,7 @@ export class ReviewPage implements OnInit {
     filePath: null,
     imageName: null,
   };
+  selectedFiles: SelectImageEvRes[] = [];
 
   constructor(
     private menu: MenuController,
@@ -36,17 +37,14 @@ export class ReviewPage implements OnInit {
     this.menu.toggle();
   }
 
-  save(savedFileName: string) {
+  save(savedFileName: string[]) {
     if (!this.selectedImage) {
       this.failedAlert();
       return;
     }
 
     this.reviewService
-      .createFile({
-        fileName: savedFileName,
-        frameType: this.frameType,
-      })
+      .createFile({ fileNames: savedFileName, frameType: this.frameType })
       .then((success) => {
         if (success) {
           this.reset();
@@ -55,6 +53,35 @@ export class ReviewPage implements OnInit {
           this.failedAlert();
         }
       });
+  }
+
+  reset() {
+    this.frameType = 'bold';
+    this.selectedImage = {
+      base64: null,
+      filePath: null,
+      imageName: null,
+    };
+    this.selectedFiles = [];
+  }
+
+  async upload() {
+    const loading = await this.loadingController.create({
+      message: 'Loading...',
+      duration: 2000,
+    });
+
+    await loading.present();
+
+    const response = await this.reviewService.uploadMulti(this.selectedFiles);
+
+    if (response.length > 0) {
+      await this.save(response);
+    } else {
+      this.failedAlert();
+    }
+
+    await loading.dismiss();
   }
 
   async successAlert() {
@@ -70,36 +97,5 @@ export class ReviewPage implements OnInit {
       message: 'File added failed',
     });
     await failed.present();
-  }
-
-  reset() {
-    this.frameType = 'bold';
-    this.selectedImage = {
-      base64: null,
-      filePath: null,
-      imageName: null,
-    };
-  }
-
-  async upload() {
-    const loading = await this.loadingController.create({
-      message: 'Loading...',
-      duration: 2000,
-    });
-
-    await loading.present();
-
-    const response = await this.reviewService.upload(
-      this.selectedImage.filePath,
-      this.selectedImage.imageName
-    );
-
-    if (response) {
-      await this.save(response.filename);
-    } else {
-      this.failedAlert();
-    }
-
-    await loading.dismiss();
   }
 }

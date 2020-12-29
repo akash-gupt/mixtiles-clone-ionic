@@ -5,7 +5,12 @@ import {
   FileUploadOptions,
   FileTransferObject,
 } from '@ionic-native/file-transfer/ngx';
-import { CreateFileBody, Endpoints, FileUploadResponse } from '../app.constant';
+import {
+  CreateFileBody,
+  Endpoints,
+  FileUploadResponse,
+  SelectImageEvRes,
+} from '../app.constant';
 import { AuthenticationService } from '../services';
 
 @Injectable()
@@ -23,7 +28,6 @@ export class ReviewService {
       await this.http.post(Endpoints.CREATE_FILE, createFileBody, headers);
       return true;
     } catch (error) {
-      console.log('[createFile] error => ', error);
       return false;
     }
   }
@@ -54,5 +58,17 @@ export class ReviewService {
         }
       );
     });
+  }
+
+  async uploadMulti(images: SelectImageEvRes[]) {
+    const uploadedFileNames: string[] = [];
+
+    for (let index = 0; index < images.length; index++) {
+      const item = images[index];
+      const e = await this.upload(item.filePath, item.imageName);
+      uploadedFileNames.push(e.filename);
+    }
+
+    return uploadedFileNames;
   }
 }

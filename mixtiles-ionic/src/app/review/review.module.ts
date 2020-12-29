@@ -16,6 +16,7 @@ import { ReviewService } from './review.service';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { FbGalleryModule } from '../reusable/fb-gallery/fb-gallery.module';
 import { IgGalleryModule } from '../reusable/ig-gallery/ig-gallery.module';
+import { ToBase64Pipe } from './to-base64.pipe';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { IgGalleryModule } from '../reusable/ig-gallery/ig-gallery.module';
     ReviewBodyComponent,
     FrameComponent,
     ReviewUploadButtonComponent,
+    ToBase64Pipe,
   ],
   providers: [ReviewService, FileTransfer],
 })

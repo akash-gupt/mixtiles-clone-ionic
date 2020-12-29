@@ -7,6 +7,7 @@ import { FrameType, SelectImageEvRes } from 'src/app/app.constant';
 import { AlbumService } from 'src/app/services/album.service';
 import { FbGalleryService } from 'src/app/reusable/fb-gallery/fb-gallery.service';
 import { IgGalleyService } from 'src/app/reusable/ig-gallery/ig-galley.service';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 @Component({
   selector: 'app-review-upload-button',
@@ -16,7 +17,9 @@ import { IgGalleyService } from 'src/app/reusable/ig-gallery/ig-galley.service';
 export class ReviewUploadButtonComponent implements OnInit {
   @Input() frameType: FrameType = 'bold';
   @Input() croppedImagePath: string = null;
+  @Input() files: SelectImageEvRes[] = [];
   @Output() onChange = new EventEmitter<SelectImageEvRes>();
+  @Output() onChangeFiles = new EventEmitter<SelectImageEvRes[]>();
 
   isLoading = false;
 
@@ -29,14 +32,14 @@ export class ReviewUploadButtonComponent implements OnInit {
     private file: FileReader,
     private crop: Crop,
     private camera: Camera,
-    private albumService: AlbumService,
     private fbGalleryService: FbGalleryService,
-    private platform: Platform
+    private platform: Platform,
+    private imagePicker: ImagePicker
   ) {}
 
   ngOnInit() {}
 
-  async presentActionSheet() {
+  async presentUploadSheet() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Actions',
       buttons: [
@@ -44,7 +47,7 @@ export class ReviewUploadButtonComponent implements OnInit {
           text: 'Choose from Phone',
           icon: 'image-outline',
           handler: () => {
-            this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+            this.pickImage();
           },
         },
         {
@@ -53,51 +56,92 @@ export class ReviewUploadButtonComponent implements OnInit {
           handler: () => {
             this.fbGalleryService.open().then(() => {
               this.fbGalleryService.onDismiss().then((response) => {
-                console.log('====dismissed =====', response?.data);
-
-                if (response?.data) {
-                  this.cropImage(response?.data?.imagePath);
-                }
+                this.handleFbImages(response.data?.imagePaths);
               });
             });
           },
         },
-        // {
-        //   text: 'Import from Instagram',
-        //   icon: 'logo-instagram',
-        //   handler: () => {
-        //     console.log('Play clicked');
-        //     this.igGalleyService.open();
-        //   },
-        // },
       ],
     });
     await actionSheet.present();
   }
 
-  pickImage(sourceType) {
-    const options: CameraOptions = {
-      quality: 100,
-      sourceType: sourceType,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-    };
-    this.camera.getPicture(options).then(
-      (imageData) => {
-        // imageData is either a base64 encoded string or a file URI
-        // If it's base64 (DATA_URL):
-        this.cropImage(imageData);
-      },
-      (err) => {
-        alert(`pick image error ${err}`);
-        // Handle error
-      }
-    );
+  async presentCropSheet(index: number) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Actions',
+      buttons: [
+        {
+          text: 'Crop',
+          icon: 'crop-outline',
+          handler: async () => {
+            const imagePath = this.files[index].filePath;
+            const croppedPath: string = await this.getCroppedImage(imagePath);
+            const { base64, imageName } = await this.getBase64(croppedPath);
+
+            this.files[index] = {
+              base64: base64,
+              filePath: croppedPath,
+              imageName: imageName,
+            };
+
+            this.onChangeFiles.emit(this.files);
+          },
+        },
+        {
+          text: 'Remove',
+          icon: 'trash-outline',
+          handler: () => {
+            this.files.splice(index, 1);
+            this.onChangeFiles.emit(this.files);
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
   }
 
-  cropImage(fileUrl: string) {
-    let fixedFileUrl = fileUrl;
+  async handleFbImages(imagePaths: []) {
+    const newImages: SelectImageEvRes[] = [];
+    for (var i = 0; i < imagePaths.length; i++) {
+      try {
+        const { base64, imageName } = await this.getBase64(imagePaths[i]);
+        newImages.push({
+          base64: base64,
+          filePath: imagePaths[i],
+          imageName: imageName,
+        });
+      } catch (error) {
+        alert(`error in handleFbImages ${JSON.stringify(imagePaths)} `);
+      }
+    }
+
+    this.onChangeFiles.emit([...this.files, ...newImages]);
+  }
+
+  pickImage() {
+    this.imagePicker
+      .getPictures({
+        allow_video: false,
+        outputType: 0,
+      })
+      .then(async (results) => {
+        const newImages: SelectImageEvRes[] = [];
+        for (var i = 0; i < results.length; i++) {
+          const { base64, imageName } = await this.getBase64(results[i]);
+
+          newImages.push({
+            base64: base64,
+            filePath: results[i],
+            imageName: imageName,
+          });
+        }
+
+        this.onChangeFiles.emit([...this.files, ...newImages]);
+      });
+  }
+
+  getCroppedImage(fileUri: string): Promise<string> {
+    let fixedFileUrl = fileUri;
 
     const isAndroid = this.platform.is('android');
 
@@ -105,39 +149,31 @@ export class ReviewUploadButtonComponent implements OnInit {
       fixedFileUrl = `file://${fixedFileUrl}`;
     }
 
-    this.crop.crop(fixedFileUrl, { quality: 50 }).then(
-      (newPath) => {
-        this.showCroppedImage(newPath.split('?')[0]);
-      },
-      (error) => {
-        alert('Error cropping image' + JSON.stringify(error));
-      }
-    );
+    return new Promise((resolve) => {
+      this.crop
+        .crop(fixedFileUrl, { quality: 50, targetWidth: -1, targetHeight: -1 })
+        .then(
+          (newPath) => {
+            return resolve(newPath.split('?')[0]);
+          },
+          (error) => {
+            alert('Error cropping image' + JSON.stringify(error));
+          }
+        );
+    });
   }
 
-  async showCroppedImage(ImagePath) {
-    this.isLoading = true;
+  async getBase64(ImagePath) {
     var copyPath = ImagePath;
     var splitPath = copyPath.split('/');
     var imageName = splitPath[splitPath.length - 1];
     var filePath = ImagePath.split(imageName)[0];
 
-    this.file.readAsDataURL(filePath, imageName).then(
-      (base64) => {
-        this.croppedImagePath = base64;
-        this.isLoading = false;
+    if (!filePath.includes('file://')) {
+      filePath = `file://${filePath}`;
+    }
 
-        // Emit to parent
-        this.onChange.emit({
-          imageName,
-          base64,
-          filePath: ImagePath,
-        });
-      },
-      (error) => {
-        alert('Error in showing image' + error);
-        this.isLoading = false;
-      }
-    );
+    const base64 = await this.file.readAsDataURL(filePath, imageName);
+    return { base64, imageName };
   }
 }

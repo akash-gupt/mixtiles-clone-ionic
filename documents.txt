@@ -1,6 +1,34 @@
 
-To setup it
+To setup 
 
-Facebook 
+1- install node.js from here https://nodejs.org/en/download/
+2- goto inside mixtiles-ionic and run in command  npm install 
+3- got inside mixtiles-clone-backend and run in command npm install
+
+to start ionic app in android run
+
+npm run android
+
+if it does not work goto here https://developer.android.com/studio and install it.
+
+open mixtiles-ionic/platforms/android in it. it will  install basic dependency of android
+
+
+to start ionic app in ios run
+
+npm run ios
+
+
+To setup Facebook 
 
 Just goto package.json and change the app Id.
+
+
+To Build release android 
+
+npm run release:android
+
+
+To Build IPA 
+
+follow this guide https://wiki.saucelabs.com/display/DOCS/Creating+an+ipa+File

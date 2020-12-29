@@ -5,6 +5,7 @@ import {
   Post,
   Query,
   UploadedFile,
+  UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -25,8 +26,8 @@ export class FileController {
 
   @Post('create')
   create(@GetUserId() userId: string, @Body() createDto: CreateFileDto) {
-    console.log(createDto);
-    return this.fileService.createFile(userId, createDto);
+    console.log(JSON.stringify(createDto));
+    // return this.fileService.createFile(userId, createDto);
   }
 
   @Post('upload')
@@ -41,5 +42,19 @@ export class FileController {
   )
   uploadFile(@UploadedFile() file) {
     return file;
+  }
+
+  @Post('multiUpload')
+  @UseInterceptors(
+    FileInterceptor('files', {
+      storage: diskStorage({
+        destination: UPLOAD_PATH,
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }),
+  )
+  uploadFiles(@UploadedFiles() files) {
+    return files;
   }
 }
