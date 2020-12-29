@@ -37,22 +37,23 @@ export class ReviewPage implements OnInit {
     this.menu.toggle();
   }
 
-  save(savedFileName: string[]) {
+  async save(savedFileName: string[]) {
     if (!this.selectedImage) {
       this.failedAlert();
       return;
     }
 
-    this.reviewService
-      .createFile({ fileNames: savedFileName, frameType: this.frameType })
-      .then((success) => {
-        if (success) {
-          this.reset();
-          this.successAlert();
-        } else {
-          this.failedAlert();
-        }
-      });
+    const success = await this.reviewService.createFile({
+      fileNames: savedFileName,
+      frameType: this.frameType,
+    });
+
+    if (success) {
+      this.reset();
+      await this.successAlert();
+    } else {
+      await this.failedAlert();
+    }
   }
 
   reset() {
