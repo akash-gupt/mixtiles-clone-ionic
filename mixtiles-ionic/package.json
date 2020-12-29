@@ -10,6 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "clean:android":"rm platforms/android/debug-signing.properties && rm platforms/android/release-signing.properties",
     "ios": "ionic cordova run ios --livereload --consolelogs",
     "android:debug": "ionic cordova run android --livereload --consolelogs --buildConfig=build.json",
     "android": "ionic cordova run android --prod --release --buildConfig=build.json",

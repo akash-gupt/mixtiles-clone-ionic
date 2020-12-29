@@ -7,6 +7,10 @@ To setup
 
 to start ionic app in android run
 
+firstly clean android
+
+npm run clean:android
+
 npm run android
 
 if it does not work goto here https://developer.android.com/studio and install it.
