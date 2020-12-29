@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  endpointUrl: 'http://localhost:3000/api',
+  endpointUrl: 'http://192.168.2.100:3000/api',
   // endpointUrl: 'https://mixtiles-clone.herokuapp.com/api',
 };
 

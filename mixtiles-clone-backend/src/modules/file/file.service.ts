@@ -11,10 +11,13 @@ export class FileService {
     private fileRepository: Repository<FileEntity>,
   ) {}
 
-  async createFile(userId: string, createFileDto: CreateFileDto) {
+  async createFile(userId: string, createFileDto) {
     const records = [];
-    const { fileNames, frameType } = createFileDto;
-    console.log(fileNames.length);
+
+    const body = JSON.parse(createFileDto);
+    console.log('body', body);
+
+    const { fileNames, frameType } = body;
     try {
       for (let index = 0; index < fileNames.length; index++) {
         const fileName = fileNames[index];

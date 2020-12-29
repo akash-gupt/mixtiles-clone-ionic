@@ -25,7 +25,13 @@ export class ReviewService {
     const headers = await this.auth.getHeaders();
 
     try {
-      await this.http.post(Endpoints.CREATE_FILE, createFileBody, headers);
+      await this.http.post(
+        Endpoints.CREATE_FILE,
+        {
+          body: createFileBody,
+        },
+        headers
+      );
       return true;
     } catch (error) {
       return false;

@@ -70,7 +70,6 @@ export class AuthenticationService {
 
     const headers = {
       Authorization: 'Bearer ' + token,
-      // 'Content-Type': 'application/json',
     };
 
     console.log('[getHeaders] headers => ', JSON.stringify(headers));
