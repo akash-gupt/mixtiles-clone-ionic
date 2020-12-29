@@ -14,6 +14,7 @@ export class FileService {
   async createFile(userId: string, createFileDto: CreateFileDto) {
     const records = [];
     const { fileNames, frameType } = createFileDto;
+    console.log(fileNames.length);
     try {
       for (let index = 0; index < fileNames.length; index++) {
         const fileName = fileNames[index];
