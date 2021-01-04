@@ -26,10 +26,8 @@ export class IgGalleyService {
   async open() {
     const modal = await this.getModal();
 
-    const status = await this.igService.login();
-    if (status) {
-      await modal.present();
-    }
+    // const status = await this.igService.login();
+    await modal.present();
   }
 
   async close() {

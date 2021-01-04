@@ -1,28 +1,12 @@
 import { Injectable } from '@angular/core';
 import { FACEBOOK_PERMISSIONS } from 'src/app/app.constant';
 import { FacebookPhotoResponse } from './types';
-import { Instagram, OauthCordova } from 'ionic-cordova-oauth';
 
 @Injectable()
 export class IgService {
-  private oauth: OauthCordova = new OauthCordova();
-  private instagramProvider: Instagram = new Instagram({
-    clientId: '905863833554626',
-    appScope: ['email'],
-  });
-
   constructor() {}
 
-  async login(): Promise<boolean> {
-    this.oauth.logInVia(this.instagramProvider).then(
-      (success) => {
-        console.log('SUCCESS: ', success);
-      },
-      (error) => {
-        console.log('ERROR: ', error);
-      }
-    );
-    return false;
+  async login(username: string, password: string) {
     // return new Promise((resolve) => {
     //   this.fb.getLoginStatus().then((v) => {
     //     if (!v) {
