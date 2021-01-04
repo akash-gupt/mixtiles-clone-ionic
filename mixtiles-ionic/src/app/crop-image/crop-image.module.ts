@@ -24,6 +24,5 @@ import { CropImageModalComponent } from './crop-image-modal/crop-image-modal.com
   ],
   declarations: [CropImagePage, CropComponent, CropImageModalComponent],
   providers: [CropImageService],
-  exports: [CropImageService],
 })
 export class CropImagePageModule {}

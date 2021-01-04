@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FrameType } from 'src/app/app.constant';
 import { CropImageService } from '../crop-image.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { CropImageService } from '../crop-image.service';
 })
 export class CropImageModalComponent implements OnInit {
   @Input() pathImg: string;
+  @Input() frame: FrameType;
 
   constructor() {}
 

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Base64ToGallery } from '@ionic-native/base64-to-gallery/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { CropImageModalComponent } from './crop-image-modal/crop-image-modal.component';
 
@@ -10,11 +9,7 @@ export class CropImageService {
   private pathImg: string;
   private frame: string;
 
-  constructor(
-    private modalController: ModalController,
-    private base64ToGallery: Base64ToGallery,
-    private file: File
-  ) {}
+  constructor(private modalController: ModalController, private file: File) {}
 
   private async getModal() {
     if (!this.modal) {
