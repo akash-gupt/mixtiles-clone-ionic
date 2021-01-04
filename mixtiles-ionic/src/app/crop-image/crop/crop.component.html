@@ -1,0 +1,10 @@
+<div class="crop-container" [ngClass]="frame === 'bold' ? 'bold' : 'edge'">
+  <div>
+    <ngx-croppie-s
+      [imageUrl]="imageUrl"
+      [croppieOptions]="options"
+      (result)="onChange.emit($event)"
+    >
+    </ngx-croppie-s>
+  </div>
+</div>

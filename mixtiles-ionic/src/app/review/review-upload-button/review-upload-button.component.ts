@@ -1,13 +1,18 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActionSheetController, Platform } from '@ionic/angular';
+import {
+  ActionSheetController,
+  ModalController,
+  Platform,
+} from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import { Crop, CropOptions } from '@ionic-native/crop/ngx';
 import { File as FileReader } from '@ionic-native/file/ngx';
 import { FrameType, SelectImageEvRes } from 'src/app/app.constant';
-import { AlbumService } from 'src/app/services/album.service';
 import { FbGalleryService } from 'src/app/reusable/fb-gallery/fb-gallery.service';
-import { IgGalleyService } from 'src/app/reusable/ig-gallery/ig-galley.service';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { Router } from '@angular/router';
+import { CropImagePage } from 'src/app/crop-image/crop-image.page';
+import { CropImageService } from 'src/app/crop-image/crop-image.service';
 
 @Component({
   selector: 'app-review-upload-button',
@@ -34,7 +39,9 @@ export class ReviewUploadButtonComponent implements OnInit {
     private camera: Camera,
     private fbGalleryService: FbGalleryService,
     private platform: Platform,
-    private imagePicker: ImagePicker
+    private imagePicker: ImagePicker,
+    private router: Router,
+    private cropImageService: CropImageService
   ) {}
 
   ngOnInit() {}
@@ -75,16 +82,35 @@ export class ReviewUploadButtonComponent implements OnInit {
           icon: 'crop-outline',
           handler: async () => {
             const imagePath = this.files[index].filePath;
-            const croppedPath: string = await this.getCroppedImage(imagePath);
-            const { base64, imageName } = await this.getBase64(croppedPath);
+            const { base64, imageName } = await this.getBase64(imagePath);
 
-            this.files[index] = {
-              base64: base64,
-              filePath: croppedPath,
-              imageName: imageName,
-            };
+            this.cropImageService.open(base64, this.frameType).then(() => {
+              this.cropImageService.onDismiss().then((response) => {
+                if (response.data?.imagePath && response.data?.base64Data) {
+                  this.files[index] = {
+                    base64: response.data?.base64Data,
+                    filePath: response.data?.imagePath,
+                    imageName: imageName,
+                  };
 
-            this.onChangeFiles.emit(this.files);
+                  this.onChangeFiles.emit(this.files);
+                }
+              });
+            });
+
+            // this.cropImage(base64);
+
+            // const imagePath = this.files[index].filePath;
+            // const croppedPath: string = await this.getCroppedImage(imagePath);
+            // const { base64, imageName } = await this.getBase64(croppedPath);
+
+            // this.files[index] = {
+            //   base64: base64,
+            //   filePath: croppedPath,
+            //   imageName: imageName,
+            // };
+
+            // this.onChangeFiles.emit(this.files);
           },
         },
         {

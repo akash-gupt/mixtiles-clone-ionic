@@ -29,6 +29,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./register/register.module').then((m) => m.RegisterPageModule),
   },
+  {
+    path: 'crop-image',
+    loadChildren: () =>
+      import('./crop-image/crop-image.module').then(
+        (m) => m.CropImagePageModule
+      ),
+  },
 ];
 
 @NgModule({

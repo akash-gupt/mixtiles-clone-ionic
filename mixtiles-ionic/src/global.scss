@@ -25,9 +25,9 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@import './theme/cropper';
 
 :root {
   --ion-default-font: ProximaNova, sans-serif;
   --ion-font-family: ProximaNova, sans-serif;
 }
-
