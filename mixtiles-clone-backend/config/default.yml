@@ -1,14 +1,14 @@
 db:
   type: 'mysql'
   port: 3306
-  host: 'remotemysql.com'
-  database: 'rVduo83um9'
+  host: 'db4free.net'
+  database: 'tafelay'
   logging: false
-  username: 'rVduo83um9'
-  password: '3zsbuYQrFE'
+  username: 'akash_test_2'
+  password: 'akash_test_2'
 
-server: 
-  port:  3000
+server:
+  port: 3000
 
 jwt:
   secret: 'JWT_SECRET'
